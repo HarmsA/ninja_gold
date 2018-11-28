@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% load static %}
+    <!--<link rel="stylesheet" type="text/css" href="main.css"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'ninja/main.css' %}">
+</head>
+<body>
+    <div class="container">
+
+        <p>Your Gold:<span id="money">{{ request.session.gold }}</span></p>
+        <div id="earnlocations">
+            <form action="/process_money/" method="post" class="locations">
+                {% csrf_token %}
+                <label for="farm">Farm</label>
+                <label for="earnings">(Earns 10-20 golds)</label>
+                <input type="checkbox" name="farm" id="" hidden checked>
+                <input type="submit" value="Find Gold!">
+            </form>
+            <form action="/process_money/" method="post" class="locations">
+                {% csrf_token %}
+                <label for="cave">Cave</label>
+                <label for="earnings">(Earns 5-10 golds)</label>
+                <input type="checkbox" name="cave" id="" hidden checked>
+                <input type="submit" value="Find Gold!">
+            </form>
+            <form action="/process_money/" method="post" class="locations">
+                {% csrf_token %}
+                <label for="house">House</label>
+                <label for="earnings">(Earns 2-5 golds)</label>
+                <input type="checkbox" name="house" id="" hidden checked>
+                <input type="submit" value="Find Gold!">
+            </form>
+            <form action="/process_money/" method="post" class="locations">
+                {% csrf_token %}
+                <label for="casino">Casino</label>
+                <label for="earnings">(Earns/takes 0-50 golds)</label>
+                <input type="checkbox" name="casino" id="" hidden checked>
+                <input type="submit" value="Find Gold!">
+            </form>
+        </div>
+        <p>Activities</p>
+        <div id="activities">
+        <ul>
+            {% for item in request.session.visit_list reversed %}
+                <li>{{ item.place }}</li>
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
+</body>
+</html>
