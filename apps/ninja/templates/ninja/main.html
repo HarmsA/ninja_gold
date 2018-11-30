@@ -16,47 +16,56 @@
     <link rel="stylesheet" type="text/css" href="{% static 'ninja/main.css' %}">
 </head>
 <body>
-    <div class="container">
-
-        <p>Your Gold:<span id="money">{{ request.session.gold }}</span></p>
-        <div id="earnlocations">
-            <form action="/process_money/" method="post" class="locations">
+<div class="container">
+    <h1>Your Gold: <span>{{ request.session.gold }}</span></h1>
+    <div class="location_box">
+        <div class="location">
+            <h2>Farm</h2>
+            <p>(earns 10-20)</p>
+            <form action="/process/" method="post">
                 {% csrf_token %}
-                <label for="farm">Farm</label>
-                <label for="earnings">(Earns 10-20 golds)</label>
-                <input type="checkbox" name="farm" id="" hidden checked>
-                <input type="submit" value="Find Gold!">
-            </form>
-            <form action="/process_money/" method="post" class="locations">
-                {% csrf_token %}
-                <label for="cave">Cave</label>
-                <label for="earnings">(Earns 5-10 golds)</label>
-                <input type="checkbox" name="cave" id="" hidden checked>
-                <input type="submit" value="Find Gold!">
-            </form>
-            <form action="/process_money/" method="post" class="locations">
-                {% csrf_token %}
-                <label for="house">House</label>
-                <label for="earnings">(Earns 2-5 golds)</label>
-                <input type="checkbox" name="house" id="" hidden checked>
-                <input type="submit" value="Find Gold!">
-            </form>
-            <form action="/process_money/" method="post" class="locations">
-                {% csrf_token %}
-                <label for="casino">Casino</label>
-                <label for="earnings">(Earns/takes 0-50 golds)</label>
-                <input type="checkbox" name="casino" id="" hidden checked>
+                <input type="hidden" name="location" value="farm">
                 <input type="submit" value="Find Gold!">
             </form>
         </div>
-        <p>Activities</p>
-        <div id="activities">
-        <ul>
-            {% for item in request.session.visit_list reversed %}
-                <li>{{ item.place }}</li>
-            {% endfor %}
-        </ul>
+        <div class="location">
+            <h2>Cave</h2>
+            <p>(earns 5-10)</p>
+            <form action="/process/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="location" value="cave">
+                <input type="submit" value="Find Gold!">
+            </form>
+        </div>
+        <div class="location">
+            <h2>House</h2>
+            <p>(earns 2-5)</p>
+            <form action="/process/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="location" value="house">
+                <input type="submit" value="Find Gold!">
+            </form>
+        </div>
+        <div class="location">
+            <h2>Casino</h2>
+            <p>(earns/takes 0-50)</p>
+            <form action="/process/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="location" value="casino">
+                <input type="submit" value="Find Gold!">
+            </form>
         </div>
     </div>
+    <p id="act_title">Activities</p>
+    <div class="activities">
+        <ul>
+            {% for item in request.session.location_list reversed %}
+
+                <li>{{ item.place }}</li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
 </body>
 </html>

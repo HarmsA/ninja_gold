@@ -3,57 +3,31 @@ from datetime import datetime
 from random import randint
 
 # Create your views here.
-def activities(request, location, money):
-    mydate = datetime.now()
-    formatedDate = mydate.strftime("%Y-%m-%d %H:%M:%S")
-    request.session['datetime'] = formatedDate
-    visit_list = request.session['visit_list']
-    visit_list.append({'place':f'Earned {money} in the {location}! {formatedDate}'})
-    return visit_list
-
 def index(request):
     if 'gold' not in request.session:
         request.session['gold'] = 0
-    if 'visit_list' not in request.session:
-        request.session['visit_list'] = []
-    return render(request, 'ninja/main.html')
+    if 'location_list' not in request.session:
+        request.session['location_list'] = []
 
-def process_money(request):
+    return render(request,'ninja/main.html')
+
+def process(request):
     if request.method != 'POST':
-        return HttpResponse("Error, not 'POST'.")
-    try:
-        if request.POST['farm']:
-            request.session['farm'] = request.POST['farm']
-            money = randint(10,21)
-            request.session['gold'] += money
-            request.session['visit_list'] = activities(request, 'Farm', money)
-    except:
-        pass
+        return HttpResponse('Issue with method type.')
 
-    try:
-        if request.POST['cave']:
-            request.session['cave'] = request.POST['cave']
-            money = randint(5,10)
-            request.session['gold'] += money
-            request.session['visit_list'] = activities(request, 'Cave', money)
-    except:
-        pass
+    context = {'farm': randint(10,20),
+               'cave': randint(5,10),
+               'house': randint(2,5),
+               'casino': randint(-50,50),
+               }
+    request.session['gold'] += context[request.POST['location']]
+    date = datetime.now()
+    request.session['datetime'] = date.strftime("%Y-%m-%d %H:%M:%S")
 
-    try:
-        if request.POST['house']:
-            request.session['house'] = request.POST['house']
-            money = randint(2,5)
-            request.session['gold'] += money
-            request.session['visit_list'] = activities(request, 'House', money)
-    except:
-        pass
+    visit_list = request.session['location_list']
+    visit_list.append({'place': f'Earned {context[request.POST["location"]]} in '
+                        f'the {request.POST["location"]}!'
+                        f' {request.session["datetime"]}'})
 
-    try:
-        if request.POST['casino']:
-            request.session['casino'] = request.POST['casino']
-            money = randint(-50,50)
-            request.session['gold'] += money
-            request.session['visit_list'] = activities(request, 'Casino', money)
-    except:
-        pass
+    request.session['location_list'] = visit_list
     return redirect('/')

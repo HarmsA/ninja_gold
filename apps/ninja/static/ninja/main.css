@@ -1,47 +1,32 @@
-.container {
-    padding: 20px;
-    width: 100%;
-}
-.locations {
+.location {
+    width: 24%;
     display: inline-block;
-    width: 200px;
-    border: 2px solid black;
-    padding: 8px;
-    margin: 5px;
+    margin: auto;
+    border: 1px solid black;
 }
-label {
-    display: block;
-    padding: 5px;
-    width: auto;
+.location h2,
+.location p,
+.location form {
+    width: 100%;
+    padding: 10px;
+    margin: auto;
     text-align: center;
 }
-input {
-    width: 100px;
-    display: block;
+.location_box {
+    width: 98%;
     margin: auto;
 }
-#activities {
-    width: 95%;
+
+.activities {
+    width: 90%;
+    margin: auto;
+    border: 1px solid black;
     height: 100px;
-    border: 2px solid black;
     overflow: scroll;
-}
-#earnlocations {
-    width: 95%;
-    margin: auto;
-}
-p  {
-    padding-top: 20px;
-}
-span#money {
-    border: 2px solid black;
-    margin-left: 5px;
-    width: 50px;
-    padding: 1px;
-    display: inline-block;
 }
 li {
     list-style: none;
 }
-ul {
+#act_title {
+    padding: 20px 0 0 20px ;
 }
